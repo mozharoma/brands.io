@@ -1,0 +1,585 @@
+@font-face {
+	font-family: 'Gilroy';
+	src: url('./fonts/Gilroy-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Gilroy';
+	src: url('./fonts/Gilroy-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./fonts/Inter24pt-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./fonts/Inter24pt-SemiBold.woff2') format('woff2');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./fonts/Inter28pt-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./fonts/Inter28pt-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('./fonts/Poppins-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+/**
+  Нормализация блочной модели
+ */
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+
+/**
+   Убираем внутренние отступы слева тегам списков,
+   у которых есть атрибут class
+  */
+:where(ul, ol):where([class]) {
+	padding-left: 0;
+}
+
+/**
+   Убираем внешние отступы body и двум другим тегам,
+   у которых есть атрибут class
+  */
+body,
+:where(blockquote, figure):where([class]) {
+	margin: 0;
+}
+
+/**
+   Убираем внешние отступы вертикали нужным тегам,
+   у которых есть атрибут class
+  */
+:where(h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p,
+	ul,
+	ol,
+	dl):where([class]) {
+	margin-block: 0;
+}
+
+:where(dd[class]) {
+	margin-left: 0;
+}
+
+:where(fieldset[class]) {
+	margin-left: 0;
+	padding: 0;
+	border: none;
+}
+
+/**
+   Убираем стандартный маркер маркированному списку,
+   у которого есть атрибут class
+  */
+:where(ul[class]) {
+	list-style: none;
+}
+
+:where(address[class]) {
+	font-style: normal;
+}
+
+/**
+   Обнуляем вертикальные внешние отступы параграфа,
+   объявляем локальную переменную для внешнего отступа вниз,
+   чтобы избежать взаимодействие с более сложным селектором
+  */
+p {
+	--paragraphMarginBottom: 24px;
+
+	margin-block: 0;
+}
+
+/**
+   Внешний отступ вниз для параграфа без атрибута class,
+   который расположен не последним среди своих соседних элементов
+  */
+p:where(:not([class]):not(:last-child)) {
+	margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+   Упрощаем работу с изображениями и видео
+  */
+img,
+video {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/**
+   Наследуем свойства шрифт для полей ввода
+  */
+input,
+textarea,
+select,
+button {
+	font: inherit;
+}
+
+html {
+	/**
+	 Пригодится в большинстве ситуаций
+	 (когда, например, нужно будет "прижать" футер к низу сайта)
+	*/
+	height: 100%;
+	/**
+	 Убираем скачок интерфейса по горизонтали
+	 при появлении / исчезновении скроллбара
+	*/
+	scrollbar-gutter: stable;
+}
+
+/**
+   Плавный скролл
+  */
+html,
+:has(:target) {
+	scroll-behavior: smooth;
+}
+
+body {
+	/**
+	 Пригодится в большинстве ситуаций
+	 (когда, например, нужно будет "прижать" футер к низу сайта)
+	*/
+	min-height: 100%;
+	/**
+	 Унифицированный интерлиньяж
+	*/
+	line-height: 1.5;
+}
+
+/**
+   Нормализация высоты элемента ссылки при его инспектировании в DevTools
+  */
+a:where([class]) {
+	display: inline-flex;
+}
+
+/**
+   Курсор-рука при наведении на элемент
+  */
+button,
+label {
+	cursor: pointer;
+}
+
+/**
+   Приводим к единому цвету svg-элементы
+  */
+[fill] {
+	fill: currentColor
+}
+
+[stroke] {
+	stroke: currentColor
+}
+
+/**
+   Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+  */
+svg * {
+	transition-property: fill, stroke;
+}
+
+/**
+   Приведение рамок таблиц в классический 'collapse' вид
+  */
+:where(table) {
+	border-collapse: collapse;
+	border-color: currentColor;
+}
+
+/**
+   Удаляем все анимации и переходы для людей,
+   которые предпочитают их не использовать
+  */
+@media (prefers-reduced-motion: reduce) {
+
+	*,
+	::before,
+	::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+:root {
+	--base-font: "Gilroy";
+	--base-font-weight: 700;
+	--base-font-color: #3E4581;
+	--base-bg-color: #FCFCFF;
+	--purple-color: #AE68FA;
+	--white-color: #FFFFFF;
+
+}
+
+/*Общие стили*/
+body {
+	color: var(--base-font-color);
+	background-color: var(--base-bg-color);
+	font-family: var(--base-font);
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+
+/*Стилизация Header*/
+.header {
+	margin-inline: 5.99vw;
+	font-family: "Poppins";
+	font-size: 14px;
+	background-image: url('/images/Lines.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding-block: 30px;
+}
+
+.nav-bar-menu {
+	padding-inline: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.nav-menu-logo {
+	display: flex;
+	flex-direction: row;
+	column-gap: 15px;
+	align-items: center;
+}
+
+.logo {}
+
+.logo-name {
+	font-size: 16px;
+}
+
+.nav-menu-list {
+	display: flex;
+	flex-direction: row;
+	column-gap: 45px;
+}
+
+.nav-menu-item {}
+
+.nav-menu-link {}
+
+.nav-menu-login-button {
+	display: block;
+	background-color: var(--purple-color);
+	color: var(--white-color);
+	padding: 13px 30px;
+	border-radius: 5px;
+}
+
+/*Стилизация Hero*/
+
+.hero {
+	padding-block: 8vh;
+	margin-inline: 5.99vw;
+	background-image: url('/images/Lines.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding-inline: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.hero-info {
+	max-width: 500px;
+}
+
+.hero-info-heading {
+	font-size: 4rem;
+	font-weight: 500;
+	line-height: 1.3;
+	margin-bottom: 13px;
+}
+
+.hero-info-subtitle {
+	font-size: 1.2rem;
+	margin-bottom: 50px;
+}
+
+.hero-info-actions {
+	display: flex;
+	flex-direction: row;
+	column-gap: 10px;
+}
+
+.hero-actions-started {
+	color: var(--white-color);
+	padding: 13px 40px;
+	background-color: var(--purple-color);
+	color: var(--white-color);
+	border: 1px solid transparent;
+	border-radius: 5px;
+}
+
+.alternative {
+	background-color: transparent;
+	color: var(--purple-color);
+	border: 1px solid var(--purple-color);
+}
+
+.hero-daigramms {
+	display: grid;
+
+	grid-template-columns: 120px 1fr 40px auto 50px;
+	grid-template-rows: 70px 100px 100px 100px 120px 70px;
+	gap: 20px;
+}
+
+.textarea {
+	background-color: var(--white-color);
+	border-radius: 10px;
+	box-shadow: 0px 0px 30px 10px #2a2a2a1c;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding: 17px;
+	align-items: center;
+	row-gap: 30px;
+	grid-column: 2 / 3;
+	grid-row: 1 / 3;
+}
+
+.textarea-absolute-profile {
+	width: 40px;
+	aspect-ratio: 1;
+	border: 2px solid var(--purple-color);
+	border-radius: 50%;
+	position: absolute;
+	top: -15px;
+	right: -15px;
+	background-color: rgb(235, 235, 235);
+}
+
+.textarea-heading {
+	font-size: 1.2rem;
+	text-align: center;
+
+}
+
+.textarea-field {
+	border: none;
+	width: 100%;
+	background-color: rgb(238, 236, 236);
+	box-shadow: 0px 0px 5px 5px rgb(238, 236, 236);
+	text-align: center;
+	border-radius: 7px;
+	height: 100%;
+}
+
+.diagramm {
+	background-color: var(--white-color);
+	box-shadow: 0px 0px 30px 10px #2a2a2a1c;
+	border-radius: 10px;
+	padding: 20px 30px 30px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	grid-column: 3 / 5;
+	grid-row: 2 /5;
+}
+
+.diagramm-heading {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	column-gap: 100px;
+	margin-bottom: 30px;
+}
+
+.diagramm-name {}
+
+.diagramm-actions {
+	display: flex;
+	flex-direction: row;
+	column-gap: 10px;
+}
+
+.diagramm-actions button {
+	width: 35px;
+	height: 35px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid rgba(0, 0, 0, 0.528);
+	background-color: transparent;
+	border-radius: 50%;
+}
+
+.diagramm-actions button img {
+	width: 18px;
+}
+
+.diagramm-actions button:last-child img {
+	width: 10px;
+}
+
+.diagramm-image {
+	align-self: center;
+}
+
+
+.diagramm-absolute-info {
+	position: absolute;
+	background-color: #293134;
+	color: var(--white-color);
+	padding: 10px;
+	max-width: 50%;
+	font-size: 0.8rem;
+	top: 50%;
+	left: -10px;
+}
+
+.followers {
+	display: flex;
+	flex-direction: column;
+	background-color: #ffffff;
+	position: relative;
+	padding: 20px 30px;
+	border-radius: 10px;
+	grid-column: 1 / 3;
+	grid-row: 3 / 6;
+	box-shadow: 0px 0px 30px 10px #2a2a2a1c;
+}
+
+
+.followers-count {
+	margin-bottom: 20px;
+}
+
+.small-font {
+	font-size: 0.7rem;
+}
+
+.followers-graph {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	column-gap: 20px;
+
+}
+
+.growth {
+	display: flex;
+	flex-direction: row;
+	column-gap: 24px;
+	padding: 20px;
+	background-color: var(--white-color);
+	border-radius: 10px;
+	box-shadow: 0px 0px 30px 10px #2a2a2a1c;
+	align-items: center;
+	grid-column: 3 / 6;
+	grid-row: 5 / 6;
+}
+
+.growth-number {
+	background-color: #EADFFB;
+	font-size: 2.5rem;
+	padding: 10px;
+	border-radius: 6px;
+	font-weight: 400;
+}
+
+.growth-statics {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+.growth-statics-text {
+	margin-bottom: 10px;
+}
+
+.growth-statics-line-long {
+	background-color: var(--purple-color);
+	width: 90%;
+	height: 8px;
+	margin-bottom: 10px;
+	border-radius: 5px
+}
+
+.growth-statics-line-short {
+	background-color: var(--purple-color);
+	width: 60%;
+	height: 8px;
+	border-radius: 5px
+}
+
+.reactions {
+	background-color: var(--white-color);
+	padding: 20px;
+	display: flex;
+	flex-direction: row;
+	column-gap: 20px;
+	border-radius: 10px;
+	grid-column: 4 / 5;
+	grid-row: 6 / 7;
+	box-shadow: 0px 0px 30px 10px #2a2a2a1c;
+	justify-content: space-around;
+}
+
+.reactions img {
+	transition: all 0.2s;
+
+}
+
+.reactions img:hover {
+	scale: 1.3;
+}
