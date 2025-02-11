@@ -323,6 +323,24 @@ a {
 }
 
 /*Стилизация Hero*/
+.main {
+	position: relative;
+}
+
+.main:before {
+	content: "";
+	width: 120px;
+	height: 120px;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: absolute;
+	display: block;
+	top: 50px;
+	left: -40px;
+	background-image: url('icons/Line.svg');
+
+}
 
 .hero {
 	padding-block: 8vh;
@@ -332,9 +350,25 @@ a {
 	background-size: cover;
 	padding-inline: 20px;
 	display: flex;
+	column-gap: 30px;
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: center;
+	position: relative;
+}
+
+.hero:before {
+	content: "";
+	height: 60px;
+	width: 60px;
+	position: absolute;
+	display: block;
+	background-image: url('icons/Star.svg');
+	top: 16%;
+	left: -15px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .hero-info {
@@ -377,7 +411,7 @@ a {
 .hero-daigramms {
 	display: grid;
 
-	grid-template-columns: 120px 1fr 40px auto 50px;
+	grid-template-columns: 160px 1fr 40px 1fr 50px;
 	grid-template-rows: 70px 100px 100px 100px 120px 70px;
 	gap: 20px;
 }
@@ -431,7 +465,7 @@ a {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	grid-column: 3 / 5;
+	grid-column: 3 / 6;
 	grid-row: 2 /5;
 }
 
